@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Mario Righi</Authors>
+    <Company>LoneTech - www.mariorighi.com</Company>
+    <PackageLicenseUrl>https://choosealicense.com/licenses/mit/</PackageLicenseUrl>
+    <Description>
+A cross platform library for store and manage configurations settings in encrypted mode in the local user machine</Description>
+    <PackageProjectUrl>https://github.com/lonemario/LT.LocalSettings</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
