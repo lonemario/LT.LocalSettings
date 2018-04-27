@@ -9,11 +9,12 @@ A cross platform library for store and manage configurations settings in encrypt
 ```
 LT.Cripto (>= 1.0.1)
 Newtonsoft.Json (>= 11.0.2)
+System.ComponentModel.Annotations (>= 4.4.0)
 ```
 
 ## Example 
 
-The SettingsManager Singleton class must be initialized before use. Use Initialize(string initVector, string passPhrase, string user, string app) method. It is sufficient to initialize the class only once in the application
+The SettingsManager must be initialized before use. Use Init(string initVector, string passPhrase, string user, string app) method. It is sufficient to initialize the class only once in the application
 
 ```c#
 static void Main(string[] args)
@@ -22,7 +23,7 @@ static void Main(string[] args)
     var iv = "uyXXuhv9k2tM3152";
     var pass = "w[To1;$HGLViM4]n";
 
-    SettingsManager.Initialize(iv,pass,"UserTest","AppTest");
+    SettingsManager.Init(iv,pass,"UserTest","AppTest");
 
     Console.WriteLine($"Number of settings: {StaticClass.Count()}");
 

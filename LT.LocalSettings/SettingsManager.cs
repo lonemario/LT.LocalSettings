@@ -20,8 +20,11 @@ namespace LT.LocalSettings
         private static string fullNameFile;
         private static List<Setting> _SettingsList;
         const string _ErrorMessage = "The SettingsManager Singleton class must be initialized before use. " + 
-            "Use Initialize(string initVector, string passPhrase, string user, string app) method. It is sufficient to initialize the class only once in the application";
+            "Use Init(string initVector, string passPhrase, string user, string app) method. It is sufficient to initialize the class only once in the application";
 
+        /// <summary>
+        /// The list of all Settings
+        /// </summary>
         public static List<Setting> SettingsList { get {
                 if (_SettingsList==null)
                     throw new Exception(_ErrorMessage);
@@ -35,7 +38,26 @@ namespace LT.LocalSettings
 
         private SettingsManager() { }
 
+        /// <summary>
+        /// [Deprecated] Use Init
+        /// </summary>
+        /// <param name="initVector"></param>
+        /// <param name="passPhrase"></param>
+        /// <param name="user"></param>
+        /// <param name="app"></param>
         public static void Initialize(string initVector, string passPhrase, string user, string app)
+        {
+            Init(initVector, passPhrase, user, app);
+        }
+
+        /// <summary>
+        /// Inizialize the setting manager class
+        /// </summary>
+        /// <param name="initVector"></param>
+        /// <param name="passPhrase"></param>
+        /// <param name="user"></param>
+        /// <param name="app"></param>
+        public static void Init(string initVector, string passPhrase, string user, string app)
         {
             //Initialize component
             homePath = String.Empty;
@@ -93,23 +115,10 @@ namespace LT.LocalSettings
                 : new List<Setting>();
         }
 
-        public static SettingsManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    lock (syncRoot)
-                    {
-                        if (instance == null)
-                            instance = new SettingsManager();
-                    }
-                }
 
-                return instance;
-            }
-        }
-
+        /// <summary>
+        /// REturn the settings count
+        /// </summary>
         public static int Count
         {
             get
@@ -122,6 +131,10 @@ namespace LT.LocalSettings
 
         }
 
+        /// <summary>
+        /// Delete a setting
+        /// </summary>
+        /// <param name="setting"></param>
         public static void Delete(Setting setting)
         {
             if (!IsInizialized)
@@ -153,6 +166,11 @@ namespace LT.LocalSettings
 
         }
 
+        /// <summary>
+        /// Get A Setting
+        /// </summary>
+        /// <param name="settingName"></param>
+        /// <returns></returns>
         public static Setting Get(string settingName)
         {
             if (!IsInizialized)
@@ -165,6 +183,11 @@ namespace LT.LocalSettings
 
         }
 
+        /// <summary>
+        /// Validate a setting
+        /// </summary>
+        /// <param name="setting"></param>
+        /// <returns></returns>
         public static bool IsValid(Setting setting)
         {
             var context = new ValidationContext(setting, serviceProvider: null, items: null);
@@ -173,6 +196,10 @@ namespace LT.LocalSettings
             return Validator.TryValidateObject(setting, context, results);
         }
 
+        /// <summary>
+        /// Save a setting
+        /// </summary>
+        /// <param name="setting"></param>
         public static void Save(Setting setting)
         {
             if (!IsInizialized)
@@ -217,6 +244,11 @@ namespace LT.LocalSettings
             File.WriteAllText(fullNameFile, criptoHelper.EncryptString(JsonConvert.SerializeObject(SettingsList), _passPhrase));
         }
 
+        /// <summary>
+        /// Validate the setting
+        /// </summary>
+        /// <param name="setting"></param>
+        /// <returns></returns>
         public static IList<ValidationResult> Validate(Setting setting)
         {
             var context = new ValidationContext(setting, serviceProvider: null, items: null);

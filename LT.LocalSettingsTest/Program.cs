@@ -1,4 +1,5 @@
 ﻿using LT.LocalSettings;
+using LT.LocalSettingsTest2;
 using LT.RandomGen;
 using System;
 
@@ -11,7 +12,7 @@ namespace LT.LocalSettingsTest
             var iv = "uyXXuhv9k2tM3152";
             var pass = "w[To1;$HGLViM4]n";
 
-            SettingsManager.Initialize(iv,pass,"UserTest","AppTest");
+            SettingsManager.Init(iv,pass,"UserTest","AppTest");
 
             var setting = SettingsManager.Get("Parametro1");
 
@@ -25,6 +26,9 @@ namespace LT.LocalSettingsTest
             TestMethod();
 
             Console.WriteLine($"Number of setting: {StaticClass.Count()}");
+
+            Test2 t = new Test2();
+            Console.WriteLine($"Number of setting: {t.Count()}");
 
             Console.ReadKey();
 
