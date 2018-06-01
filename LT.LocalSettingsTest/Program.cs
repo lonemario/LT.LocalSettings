@@ -12,6 +12,8 @@ namespace LT.LocalSettingsTest
             var iv = "uyXXuhv9k2tM3152";
             var pass = "w[To1;$HGLViM4]n";
 
+            var a = SettingsManager.IsInizialized;
+
             SettingsManager.Init(iv,pass,"UserTest","AppTest");
 
             var setting = SettingsManager.Get("Parametro1");

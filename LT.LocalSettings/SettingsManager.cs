@@ -33,7 +33,7 @@ namespace LT.LocalSettings
         }
 
         public static bool IsInizialized {
-            get { return SettingsList == null ? false : true; }
+            get { return _SettingsList == null ? false : true; }
         }
 
         private SettingsManager() { }
