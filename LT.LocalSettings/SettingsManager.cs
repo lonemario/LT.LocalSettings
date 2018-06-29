@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace LT.LocalSettings
 {
@@ -89,6 +90,9 @@ namespace LT.LocalSettings
 
             if (String.IsNullOrEmpty(homePath))
                 throw new Exception("Enviroment variabile HOME not found!");
+
+            if (homePath == "%HOMEDRIVE%%HOMEPATH%")
+                homePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             //If it's possible create a directory, I create it, also save the file in the home folder
             var tmpPath = Path.Combine(homePath, ".ltsettings");
