@@ -36,6 +36,11 @@ namespace LT.LocalSettings
             get { return _SettingsList == null ? false : true; }
         }
 
+        public static string ConfigFilePath
+        {
+            get { return fullNameFile; }
+        }
+
         private SettingsManager() { }
 
         /// <summary>
