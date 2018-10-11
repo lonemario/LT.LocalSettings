@@ -23,6 +23,9 @@ namespace LT.LocalSettings
         const string _ErrorMessage = "The SettingsManager Singleton class must be initialized before use. " + 
             "Use Init(string initVector, string passPhrase, string user, string app) method. It is sufficient to initialize the class only once in the application";
 
+        private static bool _readOnly;
+        private static List<Setting> _ExtraSettingsList;
+
         /// <summary>
         /// The list of all Settings
         /// </summary>
@@ -42,7 +45,25 @@ namespace LT.LocalSettings
             get { return fullNameFile; }
         }
 
-        private SettingsManager() { }
+        private SettingsManager() {
+            _readOnly = false;
+        }
+        /// <summary>
+        /// REturn the settings count
+        /// </summary>
+        public static int Count
+        {
+            get
+            {
+                if (!IsInizialized)
+                    throw new Exception(_ErrorMessage);
+                if (_ExtraSettingsList != null)
+                    return SettingsList.Count + _ExtraSettingsList.Count;
+
+                return SettingsList.Count;
+            }
+
+        }
 
         /// <summary>
         /// [Deprecated] Use Init
@@ -57,14 +78,34 @@ namespace LT.LocalSettings
         }
 
         /// <summary>
+        /// Reinitialize the SettingsManager in read only mode and store the old settings in extra settings
+        /// </summary>
+        /// <param name="initVector"></param>
+        /// <param name="passPhrase"></param>
+        /// <param name="user"></param>
+        /// <param name="app"></param>
+        public static void Reinitialize(string initVector, string passPhrase, string user, string app)
+        {
+            _readOnly = true;
+            if (_ExtraSettingsList == null)
+                _ExtraSettingsList = new List<Setting>();
+            if (_SettingsList != null)
+                if (_SettingsList.Count > 0)
+                    _ExtraSettingsList.AddRange(_SettingsList);
+
+            Init(initVector, passPhrase, user, app, true);
+        }
+
+        /// <summary>
         /// Inizialize the setting manager class
         /// </summary>
         /// <param name="initVector"></param>
         /// <param name="passPhrase"></param>
         /// <param name="user"></param>
         /// <param name="app"></param>
-        public static void Init(string initVector, string passPhrase, string user, string app)
+        public static void Init(string initVector, string passPhrase, string user, string app, bool readOnly = false)
         {
+            _readOnly = readOnly;
             //Initialize component
             homePath = String.Empty;
             fileName = String.Empty;
@@ -124,28 +165,14 @@ namespace LT.LocalSettings
                 : new List<Setting>();
         }
 
-
-        /// <summary>
-        /// REturn the settings count
-        /// </summary>
-        public static int Count
-        {
-            get
-            {
-                if (!IsInizialized)
-                    throw new Exception(_ErrorMessage);
-
-                return SettingsList.Count;
-            }
-
-        }
-
         /// <summary>
         /// Delete a setting
         /// </summary>
         /// <param name="setting"></param>
         public static void Delete(Setting setting)
         {
+            if (_readOnly)
+                throw new Exception("Using reinitialize switch the SettingManager in read only mode");
             if (!IsInizialized)
                 throw new Exception(_ErrorMessage);
             //Check arguments
@@ -188,6 +215,11 @@ namespace LT.LocalSettings
             if (String.IsNullOrWhiteSpace(settingName))
                 throw new ArgumentNullException(nameof(settingName));
 
+            //If the setting is in the Main Settings Collection return it, else find in Extra Settings Collection
+            var res = SettingsList.Where(s => s.Name == settingName).FirstOrDefault();
+            if (res != null)
+                return res;
+
             return SettingsList.Where(s => s.Name == settingName).FirstOrDefault();
 
         }
@@ -211,6 +243,8 @@ namespace LT.LocalSettings
         /// <param name="setting"></param>
         public static void Save(Setting setting)
         {
+            if (_readOnly)
+                throw new Exception("Using reinitialize switch the SettingManager in read only mode");
             if (!IsInizialized)
                 throw new Exception(_ErrorMessage);
             //Check arguments
@@ -240,13 +274,15 @@ namespace LT.LocalSettings
             {
                 //INSERT
                 //res = new Setting { Name = setting.Name, Value = setting.Value };
-                SettingsList.Add(new Setting { Name = setting.Name, Value = setting.Value });
+                _SettingsList.Add(new Setting { Name = setting.Name, Value = setting.Value });
             }
             SaveFile();
         }
 
         private static void SaveFile()
         {
+            if (_readOnly)
+                throw new Exception("Using reinitialize switch the SettingManager in read only mode");
             if (!IsInizialized)
                 throw new Exception(_ErrorMessage);
 
