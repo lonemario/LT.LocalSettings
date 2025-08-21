@@ -20,7 +20,7 @@ A cross platform library for store and manage configurations settings in encrypt
     <PackageReference Include="LT.Cripto" Version="1.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.0" />
-    <None Include=".\README.md" Pack="true" PackagePath="\"/>
+    <None Include="..\README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>

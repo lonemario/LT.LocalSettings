@@ -32,7 +32,7 @@ namespace LT.LocalSettingsTest
             Test2 t = new Test2();
             Console.WriteLine($"Number of setting: {t.Count()}");
 
-            Console.ReadKey();
+            //Console.ReadKey();
 
         }
 
