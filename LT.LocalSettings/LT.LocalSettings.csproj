@@ -9,9 +9,9 @@
 A cross platform library for store and manage configurations settings in encrypted mode in the local user machine</Description>
     <PackageProjectUrl>https://github.com/lonemario/LT.LocalSettings</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.6.0</AssemblyVersion>
-    <FileVersion>1.0.6.0</FileVersion>
-    <Version>1.0.6</Version>
+    <AssemblyVersion>1.0.7.0</AssemblyVersion>
+    <FileVersion>1.0.7.0</FileVersion>
+    <Version>1.0.7</Version>
     <PackageId>LT.LocalSettings</PackageId>
   </PropertyGroup>
 
