@@ -7,8 +7,8 @@ A cross platform library for store and manage configurations settings in encrypt
 
 ### .NETStandard 2.0
 ```
-LT.Cripto (>= 1.0.1)
-Newtonsoft.Json (>= 13.0.1)
+LT.Cripto (>= 1.0.2)
+Newtonsoft.Json (>= 13.0.2)
 System.ComponentModel.Annotations (>= 4.4.0)
 ```
 
