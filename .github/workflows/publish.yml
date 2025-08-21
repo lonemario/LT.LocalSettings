@@ -24,7 +24,7 @@ jobs:
       run: dotnet build --configuration Release
 
     - name: Pack
-      run: dotnet pack --configuration Release --output ./nupkgs
+      run: dotnet pack ./LT.LocalSettings/LT.LocalSettings.csproj --configuration Release --output ./nupkgs
 
     - name: Publish to NuGet
       run: dotnet nuget push ./nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
