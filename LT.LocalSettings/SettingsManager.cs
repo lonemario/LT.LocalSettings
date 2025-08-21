@@ -14,7 +14,7 @@ namespace LT.LocalSettings
     {
         private static string homePath;
         private static string fileName;
-        private static volatile SettingsManager instance;
+        //private static volatile SettingsManager instance;
         private static object syncRoot = new Object();
         private static CriptoHelper criptoHelper;
         private static string _passPhrase;
